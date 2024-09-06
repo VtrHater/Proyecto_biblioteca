@@ -1,0 +1,70 @@
+Semana 1 (Semana entre 09/09/2024 a 15/09/2024) PENDIENTE :
+Implementar sistema CRUD (creación de cuentas)  - Edgar Álvarez
+Mostrar solicitudes en pendiente en la página principal  - Edgar Álvarez
+Crear la base de la página principal- Michelle Cheuqueman 
+- Conectarlo a la pestaña de Agregar solicitudes. 
+- Conectarlo a la pestaña de mis solicitudes.
+- Conectarlo a la pestaña de mi perfil.
+- Conectarlo a la pestaña del registro.
+
+Semana 2 (Semana entre 16/0972024 a 22/09/2024) PENDIENTE: 
+Semana del 18 (“Libre”, usada para autoestudio de HTML, Django y CSS)
+Habilitar las bases de datos a la página - Edgar Álvarez
+
+Semana 3 (Semana entre 23/09/2024 a 29/0972024) PENDIENTE:
+Página Agregar solicitudes
+             - Poder ingresar el Nombre del documento - Romina Valdes
+             - Poder ingresar un comentario - Romina Valdes
+             - Poder elegir el departamento a quien se le enviará la solicitud  - Antonia Contreras
+           - “Botones” de Cancelar la solicitud y Agregar la solicitud (Agregar deshabilitado hasta que todos los parámetros tengan alguna info ingresadas/seleccionadas), ambos botones regresan al usuario a la página principal. - Antonia Contreras
+
+
+Semana 4 (Semana entre 30/09/2024 a 06/10/2024) PENDIENTE: 
+Página de mis solicitudes
+                  -  Botones para seleccionar entre solicitudes hechas/recibidas, que filtrarán las solicitudes dependiendo de cual está activa - Constanza Toro
+                  - Mostrar solicitudes que haya realizado el usuario o haya recibido el usuario - Constanza Toro
+                  - Botón para volver a la página principal - Constanza Toro
+                  - Al hacerle click a una solicitud que esta quede seleccionada - Edgar Álvarez
+                  - Botón para editar:  
+             - conecta a la plantilla de edición dependiendo de si es una solicitud hecha o   recibida. - Edgar Álvarez
+                                   - no se activa hasta que se seleccione una solicitud - Edgar Álvarez
+
+Semana 5 (Semana entre 07/10/2024 a 13/10/2024) PENDIENTE: 
+Páginas edición de solicitudes Pt.1 
+   -  Editar solicitudes hechas 
+           - Poder reingresar los datos de nombre/comentario/departamentos - Michelle Cheuqueman
+           - Botón para regresar a mis solicitudes - Michelle Cheuqueman
+           - Botón para guardar los cambios realizados - Edgar Álvarez
+Semana 6 (Semana entre 14/10/2024 a 20/10/2024) PENDIENTE:
+Páginas edición solicitudes Pt. 2:
+  -  Editar solicitudes recibidas
+       - Cambiar el progreso realizado entre Pendiente/En proceso/Completada - Romina Valdes
+       - Botón para volver a mis solicitudes - Romina Valdes
+       - Botón para guardar el cambio realizado - Antonia Contreras
+
+Semana 7 (Semana entre 21/10/2024 a 27/10/2024) PENDIENTE: 
+Página registro:
+                      -  Mostrar las solicitudes que se encuentren en estado completado - Constanza Toro
+                      - Botón para regresar a la página principal - Constanza Toro
+                      - Selección de filtros (Departamento/fecha(?)) - Michelle Cheuqueman
+
+Semana 8 (Semana entre 28/10/2024 a 03/11/2024) PENDIENTE:
+Página Perfil
+              -  Mostrar el nombre y el departamento al que pertenezca la cuenta del usuario que se esté usando - Michelle Cheuqueman
+              - Botón para regresar a la página principal - Antonia Contreras
+              - Botón para cerrar la sesión, desconecta la sesión y regresa a la pestaña de inicio          sesión - Edgar Álvarez
+             -Botón de edición del perfil, conectar a la pestaña edición del perfil - Romina Valdes
+
+Semana 9 (Semana entre 04/11/2024 a 10/11/2024) PENDIENTE: 
+Página edicion Perfil
+    -  Poder editar el nombre de usuario y el departamento al que pertenece - Antonia Contreras
+    - Botón para volver a la pestaña de perfil - Antonia Contreras
+    - Botón para guardar los cambios realizados y volver a la pestaña de perfil - Constanza Toro
+
+Semana 10 (Semana entre 11/11/2024 a 17/11/2024) PENDIENTE: 
+Mostrar las solicitudes con color de fondo dependiendo de su estado actual - Romina Valdes
+Agregar sonido cuando se ingrese una nueva solicitud - Edgar Álvarez
+Poder navegar entre las distintas solicitudes en la página principal/registro/mis solicitudes - Michelle Cheuqueman
+
+Semana 11 (Semana entre 18/11/2024 a 24/11/2024) PENDIENTE: 
+ Semana de Debugging/corrección de errores dentro de la página - Edgar Álvarez
