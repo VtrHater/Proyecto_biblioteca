@@ -18,6 +18,7 @@ from django.contrib import admin
 from django.urls import path, include
 
 urlpatterns = [
-    path('', include ('Aplicacion.urls')),
+    path('', include('Cuentas.urls')),  #se incluye el archivo urls de la carpeta cuentas
+    path('', include ('Aplicacion.urls')), #se incluye el archivo urls de la carpeta aplicacion
     path('admin/', admin.site.urls),
 ]

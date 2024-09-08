@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Proyecto Biblioteca</title>
+</head>
+<body>         {# plantilla base, cambiar luego para adaptar a lo primero que sale cuando entras sin estar registrado, para iniciar la sesion #}
+    <nav>                
+        <ul>
+            <li>
+                <a href="/Testeo">Home</a>
+            </li>
+            {% if cuenta.user_authenticated %}
+            <li>
+                <a href="/signout">Cerrar Sesión</a>
+            </li>
+            {% else %}
+            <li>
+                <a href="/signup">Iniciar Sesión</a>
+            </li>
+            {% endif %}
+        </ul>
+    </nav>
+    {% block content %}
+    {% endblock %}
+
+</body>
+</html>
