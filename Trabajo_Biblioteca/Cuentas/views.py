@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
-from django.contrib.auth.forms import UserCreationForm #formulario creacion de cuentas de django
+from django.contrib.auth.forms import UserCreationForm, AuthenticationForm #formulario creacion de cuentas de django
 from django.contrib.auth.models import User #creacion de usuarios de django
-from django.contrib.auth import login, logout #poder iniciar y cerrar sesion
+from django.contrib.auth import login, logout, authenticate #poder iniciar y cerrar sesion
 from django.http import HttpResponse
 
 def registrar(request):
@@ -33,8 +33,23 @@ def base(request):
 
 def cerrar_sesion(request):
     logout(request)
-    return redirect ('Testeo') #Envia al link con el name = Testeo
+    return redirect ('cerrar_sesion') #Envia al link con el name = cerrar_sesion
      
+def iniciar_sesion(request):
+    if request.method == "GET":
+        return render(request, 'signin.html',{
+        'form': AuthenticationForm,
+        })
+    else:
+        user= authenticate(request, username=request.POST['username'], password=request.POST['password'])
+        if user is None:
+            return render(request, 'signin.html',{
+                'form': AuthenticationForm,
+                'error': "Nombre o contraseña incorrecta"
+                })
+        else:
+            login(request,user)
+            return redirect ('principal')
 
 
 
