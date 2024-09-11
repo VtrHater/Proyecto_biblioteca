@@ -1,13 +1,16 @@
-{% extends "master.html" %}
+{% extends 'master.html' %}
 
-{% block content %}  {# plantilla con el formulario de creacion de cuenta #}
-<h1>Creación de cuentas</h1>
-{{ error }}
-<form action="/signup/" method="POST">
+{% block content %}
+<h1>Crea tu cuenta</h1>
+<form action="/crear_cuenta/" method="POST">
     {% csrf_token %}
-    {{forms.as_p}}
+
+    {{error}}
+    {{form.as_p}}
+
     <button>
-        Sign-up
+        Crear cuenta
     </button>
+
 </form>
 {% endblock %}

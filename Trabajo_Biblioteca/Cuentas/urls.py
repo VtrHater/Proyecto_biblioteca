@@ -2,8 +2,9 @@ from django.urls import path
 from . import views
 
 urlpatterns = [
-    path('testing/', views.base, name = 'cerrar_sesion'),  #Propenso a cambiar, de momento es solo para testear las funcionalidades
-    path('signup/', views.registrar, name="signup"), #carga el formulario de creacion de cuentas
-    path('signout/', views.cerrar_sesion, name ="Cerrar"), #se encargara del apartado de cerrar sesion
-    path('signin/', views.iniciar_sesion, name= "signin"),
-    ]
+    path('crear_cuenta/', views.registrar, name= 'signin'),
+    path('solicitudes/', views.tareas, name ="Solicitudes"),
+    path('Home/', views.Home, name= "Home"),
+    path('cerrar_sesion/', views.cerrar_sesion, name='cerrar_sesion'),
+    path('iniciar_sesion/',views.iniciar_sesion, name='iniciar_sesion')
+]

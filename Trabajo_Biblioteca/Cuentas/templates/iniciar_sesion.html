@@ -1,0 +1,18 @@
+{% extends 'master.html' %}
+
+{% block content %}
+<h1>Iniciar Sesion</h1>
+
+{{error}}
+
+<form action="/iniciar_sesion/" method="POST">
+    {% csrf_token %}
+    
+    {{form.as_p}}
+
+    <button>
+        Iniciar Sesion
+    </button>
+</form>
+
+{% endblock %}

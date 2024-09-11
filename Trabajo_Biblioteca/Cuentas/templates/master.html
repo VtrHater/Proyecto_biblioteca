@@ -5,28 +5,30 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Proyecto Biblioteca</title>
 </head>
-<body>         {# plantilla base, cambiar luego para adaptar a lo primero que sale cuando entras sin estar registrado, para iniciar la sesion #}
-    <nav>                
+<body>
+    <nav>
         <ul>
             <li>
-                <a href="/testing">Home</a>
+                <a href="/Home">Home</a>
             </li>
-            {% if cuenta.user_authenticated %}
             <li>
-                <a href="/signout">Cerrar Sesión</a>
+                <a href="/solicitudes">Solicitudes</a>
+            </li>
+            {% if user.is_authenticated %}
+            <li>
+                <a href="/cerrar_sesion">Cerrar Sesion</a>
             </li>
             {% else %}
             <li>
-                <a href="/signin">Crear cuenta</a>
+                <a href="/iniciar_sesion">Iniciar Sesion</a>
             </li>
             <li>
-                <a href="/signup">Iniciar Sesión</a>
+                <a href="/crear_cuenta">Crear cuenta</a>
             </li>
             {% endif %}
         </ul>
     </nav>
     {% block content %}
     {% endblock %}
-
 </body>
 </html>
