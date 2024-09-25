@@ -6,3 +6,6 @@ from django.template import loader
 def principal(request):
     template= loader.get_template('principal.html')
     return HttpResponse(template.render())
+def agregar_solicitudes(request):
+    template= loader.get_template("agregar_solicitudes.html")
+    return HttpResponse(template.render())
