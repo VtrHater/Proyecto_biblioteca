@@ -1,5 +1,8 @@
 {% extends 'master.html' %}
 
 {% block content %}
-<h1>POGGERS</h1>
+<form action ="/solicitudes/" class="formulario" method ="POST">
+    {% csrf_token %}
+    {{ form }}
+</form>
 {% endblock %}
