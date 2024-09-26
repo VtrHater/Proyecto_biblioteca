@@ -3,6 +3,7 @@ from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth.models import User
 from django.contrib.auth import login, logout, authenticate
 from django.http import HttpResponse
+from .forms import solicitudesform
 
 def registrar(request):
     if request.method == "GET":
@@ -52,3 +53,8 @@ def iniciar_sesion(request):
         else:
             login(request,user)
             return redirect('Home')
+def solicitud(request):
+    data = {
+        'form': solicitudesform
+    }
+    return render(request, 'solicitudes.html', data)
