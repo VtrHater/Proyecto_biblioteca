@@ -1,8 +1,17 @@
 {% extends 'master.html' %}
 
 {% block content %}
-<form action ="/solicitudes/" class="formulario" method ="POST">
+<form action ="" class="formulario" method ="POST">
     {% csrf_token %}
-    {{ form }}
+
+    {{ form.as_p }}
+
+    <br>
+    <button type="submit" id="btnEnviar" class="button">Enviar</button>
+
 </form>
+{{mensaje}}
+<table id="Cuentas_solicitudes">
+
+</table>
 {% endblock %}
