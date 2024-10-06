@@ -55,6 +55,15 @@ def iniciar_sesion(request):
             return redirect('Home')
 def solicitud(request):
     data = {
-        'form': solicitudesform
+        'form': solicitudesform()
     }
+
+    if request.method == 'POST':
+        formulario = solicitudesform(data=request.POST)
+        if formulario.is_valid():
+            formulario.save()
+            data["mensaje"] = "solicitud enviada"
+        else:
+            data["form"] = formulario
+
     return render(request, 'solicitudes.html', data)
