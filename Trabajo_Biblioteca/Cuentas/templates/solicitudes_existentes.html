@@ -1,0 +1,79 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lista de solicitudes</title>
+    <style>
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        table, th, td {
+            border: 1px solid black;
+        }
+        th, td {
+            padding: 10px;
+            text-align: left;
+        }
+    </style>
+</head>
+<body>
+    
+        <ul>
+            <li>
+                <a href="/Home">Home</a>
+            </li>
+            <li>
+                <a href="/solicitudes">Solicitudes</a>
+            </li>
+            {% if user.is_authenticated %}
+            <li>
+                <a href="/cerrar_sesion">Cerrar Sesion</a>
+            </li>
+            {% else %}
+            <li>
+                <a href="/iniciar_sesion">Iniciar Sesion</a>
+            </li>
+            <li>
+                <a href="/crear_cuenta">Crear cuenta</a>
+            </li>
+            {% endif %}
+        </ul>
+    
+    <h2>Lista de Solicitudes</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>id</th>
+                <th>Documento</th>
+                <th>Departamento</th>
+                <th>Nota</th>
+                <th>Fecha</th>
+                <th>Autor</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for Solicitudes in models %}
+                <tr>
+                    <td>{{ Solicitudes.documento }}</td>
+                    <td>{{ Solicitudes.departamento }}</td>
+                    <td>{{ Solicitudes.nota }}</td>
+                    <td>{{ Solicitudes.fecha }}</td>
+                    <td>{{ Solicitudes.autor }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <br>
+    <br>
+    <!-- br para salto de línea-->
+    <a href="{% url 'principal' %}">
+
+        <button>Volver a inicio</button>
+    </a>
+</body>
+
+</html>
+   

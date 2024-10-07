@@ -4,6 +4,8 @@ from django.contrib.auth.models import User
 from django.contrib.auth import login, logout, authenticate
 from django.http import HttpResponse
 from .forms import solicitudesform
+from .models import Solicitudes
+
 
 def registrar(request):
     if request.method == "GET":
@@ -67,3 +69,11 @@ def solicitud(request):
             data["form"] = formulario
 
     return render(request, 'solicitudes.html', data)
+
+def soliexistentes(request):
+    return render(request, 'solicitudes_existentes.html')
+
+def solicitudes_lista(request):
+    Solicitudes = Solicitudes.objects.all()
+    return render(request,'solicitudes_lista.html', {'Solicitudes': Solicitudes})
+    
