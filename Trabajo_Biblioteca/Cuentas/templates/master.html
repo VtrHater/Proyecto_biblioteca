@@ -11,13 +11,13 @@
             <li>
                 <a href="/Home">Home</a>
             </li>
+            {% if user.is_authenticated %}  
             <li>
                 <a href="/solicitudes">Solicitudes</a>
             </li>
             <li>
                 <a href="/solicitudes_existentes">Solicitudes existentes</a>
             </li>
-            {% if user.is_authenticated %}
             <li>
                 <a href="/cerrar_sesion">Cerrar Sesion</a>
             </li>

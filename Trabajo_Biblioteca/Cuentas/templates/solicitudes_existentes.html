@@ -20,7 +20,6 @@
     </style>
 </head>
 <body>
-    
         <ul>
             <li>
                 <a href="/Home">Home</a>
@@ -41,38 +40,52 @@
             </li>
             {% endif %}
         </ul>
-    
+    <a href="{% url 'filtrar_activas' %}?activas=true">
+        <button>Solicitudes activas</button>
+    </a>
+    <br>
+    <br>
+    <a href="{% url 'filtrar_solicitudes_usuario' %}">
+        <button>Mis Solicitudes</button>
+    </a>
+    <br>
+    <br>
+    <a href="{% url 'principal' %}">
+        <button>Volver a inicio</button>
+    </a>
+        
     <h2>Lista de Solicitudes</h2>
     <table>
         <thead>
             <tr>
-                <th>id</th>
+                <th>ID</th>
                 <th>Documento</th>
                 <th>Departamento</th>
                 <th>Nota</th>
                 <th>Fecha</th>
                 <th>Autor</th>
+                <th>Estado</th>
             </tr>
         </thead>
         <tbody>
-            {% for Solicitudes in models %}
+            {% for x in contexto %}
                 <tr>
-                    <td>{{ Solicitudes.documento }}</td>
-                    <td>{{ Solicitudes.departamento }}</td>
-                    <td>{{ Solicitudes.nota }}</td>
-                    <td>{{ Solicitudes.fecha }}</td>
-                    <td>{{ Solicitudes.autor }}</td>
+                    <td>{{ x.id }}</td>
+                    <td>{{ x.documento }}</td>
+                    <td>{{ x.departamento }}</td>
+                    <td>{{ x.nota }}</td>
+                    <td>{{ x.fecha }}</td>
+                    <td>{{ x.autor }}</td>
+                    <td>{{ x.estado }}</td> 
+                </tr>
+            {% empty %}
+                <tr>
+                    <td colspan="7">No hay solicitudes.</td>
                 </tr>
             {% endfor %}
         </tbody>
     </table>
-    <br>
-    <br>
-    <!-- br para salto de línea-->
-    <a href="{% url 'principal' %}">
-
-        <button>Volver a inicio</button>
-    </a>
+      
 </body>
 
 </html>
