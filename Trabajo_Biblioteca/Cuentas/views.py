@@ -4,6 +4,7 @@ from django.contrib.auth.models import User
 from django.contrib.auth import login, logout, authenticate
 from django.http import HttpResponse
 from .forms import solicitudesform
+from .models import Solicitudes
 
 def registrar(request):
     if request.method == "GET":
@@ -67,3 +68,38 @@ def solicitud(request):
             data["form"] = formulario
 
     return render(request, 'solicitudes.html', data)
+
+
+
+def soliexistentes(request):
+    variable = Solicitudes.objects.values() #values. variable es la info.
+    return render(request, 'solicitudes_existentes.html', {'contexto': variable})
+
+def solicitudes_lista(request):
+    variable = Solicitudes.objects.all() #all
+    return render(request,'solicitudes_existentes.html', {'contexto': variable})
+
+
+def filtrar_activas(request):
+    # Si el parámetro 'activas' está en la URL y es 'true'
+    if 'activas' in request.GET and request.GET['activas'] == 'true':
+        # Filtrar las solicitudes que no están en estado 'completada'
+        var_activas = Solicitudes.objects.exclude(estado='completada')
+    else:
+        # Mostrar todas las solicitudes si el parámetro no está presente
+        var_activas = Solicitudes.objects.all()
+
+    # Renderizar la plantilla con el contexto de las solicitudes filtradas
+    return render(request, 'solicitudes_existentes.html', {'contexto': var_activas})
+
+def filtrar_solicitudes_usuario(request):
+    if request.user.is_authenticated:
+        user_name = request.user.username  # Suponiendo que quieres usar el nombre de usuario
+        # Filtrar las solicitudes que ha creado el usuario
+        # Más adelante se debe hacer la conexión del usuario con el departamento al cual pertenece.
+        var_s_usuario = Solicitudes.objects.filter(autor=user_name)
+    else:
+        var_s_usuario = Solicitudes.objects.none()  # Si no está autenticado, no se muestra nada
+    return render(request, 'solicitudes_existentes.html', {'contexto': var_s_usuario})
+    
+    
