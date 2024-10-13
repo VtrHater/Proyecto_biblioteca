@@ -1,0 +1,37 @@
+{% extends "master.html" %}
+
+{% block content %}
+<style>
+    table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+    table, th, td {
+        border: 1px solid black;
+    }
+    th, td {
+        padding: 10px;
+        text-align: left;
+    }
+</style>
+<table>
+    <thead>
+        <tr>
+            <th>Documento</th>
+            <th>Nota</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for x in mostrar %}
+            <tr>
+                <td>{{ x.documento }}</td>
+                <td>{{ x.nota }}</td>
+            </tr>
+        {% empty %}
+            <tr>
+                <td colspan="7">No hay solicitudes.</td>
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

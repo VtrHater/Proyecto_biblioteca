@@ -1,10 +1,10 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth.models import User
 from django.contrib.auth import login, logout, authenticate
 from django.http import HttpResponse
 from .forms import solicitudesform
-from .models import Solicitudes
+from .models import Solicitudes, Personal
 
 def registrar(request):
     if request.method == "GET":
@@ -93,6 +93,7 @@ def filtrar_activas(request):
     return render(request, 'solicitudes_existentes.html', {'contexto': var_activas})
 
 def filtrar_solicitudes_usuario(request):
+    valor= request.GET
     if request.user.is_authenticated:
         user_name = request.user.username  # Suponiendo que quieres usar el nombre de usuario
         # Filtrar las solicitudes que ha creado el usuario
@@ -100,6 +101,25 @@ def filtrar_solicitudes_usuario(request):
         var_s_usuario = Solicitudes.objects.filter(autor=user_name)
     else:
         var_s_usuario = Solicitudes.objects.none()  # Si no está autenticado, no se muestra nada
-    return render(request, 'solicitudes_existentes.html', {'contexto': var_s_usuario})
+    return render(request, 'solicitudes_existentes.html', {'contexto': var_s_usuario,"activas":valor})
     
     
+def editar_mis_solicitudes(request):
+    if request.GET:
+        return render(request, "editar_mis_solicitudes.html")
+        
+def editar_personal(request):
+    if request.user.is_authenticated:
+        usuario = request.user.username
+        soli_usuario= Solicitudes.objects.filter(autor=usuario)
+    else:
+        soli_usuario= Solicitudes.objects.none()
+    return render(request,"editar_personales.html", {"valor":soli_usuario})
+
+def editar_por_departamento(request):
+    if request.user.is_authenticated:
+        usuario= request.user.id
+        department= Personal.objects.values_list("sector").filter(name=usuario)
+        department= department[0][0]
+        entregar= Solicitudes.objects.filter(departamento=department).values()
+        return render(request, "editar_departamental.html",{"mostrar":entregar})

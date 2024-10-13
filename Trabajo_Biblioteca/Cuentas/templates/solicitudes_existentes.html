@@ -25,7 +25,7 @@
                 <a href="/Home">Home</a>
             </li>
             <li>
-                <a href="/solicitudes">Solicitudes</a>
+                <a href="/solicitudes">Crear una nueva solicitud</a>
             </li>
             {% if user.is_authenticated %}
             <li>
@@ -45,22 +45,22 @@
     </a>
     <br>
     <br>
-    <a href="{% url 'filtrar_solicitudes_usuario' %}">
+    <a href="{% url 'filtrar_solicitudes_usuario' %}?activas=True">
         <button>Mis Solicitudes</button>
     </a>
     <br>
     <br>
-    <a href="{% url 'principal' %}">
+    <a href="/Home">
         <button>Volver a inicio</button>
     </a>
-        
+    
     <h2>Lista de Solicitudes</h2>
     <table>
         <thead>
             <tr>
                 <th>ID</th>
                 <th>Documento</th>
-                <th>Departamento</th>
+                <th>Departamento encargado</th>
                 <th>Nota</th>
                 <th>Fecha</th>
                 <th>Autor</th>
@@ -85,7 +85,15 @@
             {% endfor %}
         </tbody>
     </table>
-      
+    <br>
+    <br>
+    {% if activas %}
+    <a href="editar_solicitud/?activas=True">
+        <button>Editar una Solicitud</button>
+    </a>
+    <br>
+    <br>
+    {% endif %}
 </body>
 
 </html>
