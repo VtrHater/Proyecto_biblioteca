@@ -1,0 +1,14 @@
+{% extends "master.html" %}
+
+{% block content %}
+    <form method="post">
+        {% csrf_token %}
+
+        {{formulario.as_p}}
+    
+        <button>
+            Guardar Cambios
+        </button>
+    </form>
+
+{% endblock %}
