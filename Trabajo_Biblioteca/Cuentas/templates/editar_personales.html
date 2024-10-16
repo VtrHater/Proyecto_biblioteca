@@ -26,6 +26,7 @@
     <tbody>
         {% for x in valor %}
             <tr>
+                <td><a href= "{% url 'editar_solicitud_personal' x.id %}">{{x.documento}}</a></td>
                 <td>{{ x.documento }}</td>
                 <td>{{ x.departamento }}</td>
                 <td>{{ x.nota }}</td>

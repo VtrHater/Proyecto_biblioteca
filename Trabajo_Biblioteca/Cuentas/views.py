@@ -103,7 +103,6 @@ def filtrar_solicitudes_usuario(request):
         var_s_usuario = Solicitudes.objects.none()  # Si no está autenticado, no se muestra nada
     return render(request, 'solicitudes_existentes.html', {'contexto': var_s_usuario,"activas":valor})
     
-    
 def editar_mis_solicitudes(request):
     if request.GET:
         return render(request, "editar_mis_solicitudes.html")
@@ -116,6 +115,17 @@ def editar_personal(request):
         soli_usuario= Solicitudes.objects.none()
     return render(request,"editar_personales.html", {"valor":soli_usuario})
 
+def editar_solicitud_personal(request, lol):
+    if request.method == "GET":
+        soli_citud = get_object_or_404(Solicitudes, pk= lol)
+        soli_form = solicitudesform(instance = soli_citud)
+        return render(request, "editar_solicitudes_personal.html", {"mostrar":soli_citud, "formulario": soli_form})
+    else:
+        actualizada = get_object_or_404(Solicitudes, pk=lol)
+        formulario_actualizado = solicitudesform(request.POST, instance=actualizada)
+        formulario_actualizado.save()
+        return redirect("filtrar_solicitudes_usuario")
+    
 def editar_por_departamento(request):
     if request.user.is_authenticated:
         usuario= request.user.id

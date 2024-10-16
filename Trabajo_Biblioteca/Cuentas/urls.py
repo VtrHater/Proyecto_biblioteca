@@ -16,5 +16,9 @@ urlpatterns = [
     path('mis_solicitudes/', views.filtrar_solicitudes_usuario, name="filtrar_solicitudes_usuario"),
     path('mis_solicitudes/editar_solicitud/', views.editar_mis_solicitudes, name="Edit"),
     path("editar_personales/", views.editar_personal, name= "Editar_Personales"),
-    path("editar_por_departamento/", views.editar_por_departamento, name="Edit_Departamental")
+    path("editar_personales/<int:lol>", views.editar_solicitud_personal, name="editar_solicitud_personal")
+    
 ]
+
+    
+
