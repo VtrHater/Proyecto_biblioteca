@@ -17,21 +17,23 @@
 <table>
     <thead>
         <tr>
+            <th>Id</th>
             <th>Documento</th>
-            <th>Nombre</th>
             <th>Departamento</th>
             <th>Nota</th>
-            <th>Autor</th>
+            <th>Funcionario</th>
+            <th>Estado</th>
         </tr>
     </thead>
     <tbody>
         {% for x in valor %}
             <tr>
-                <td><a href= "{% url 'editar_solicitud_personal' x.id %}">{{x.documento}}</a></td>
+                <td>{{x.id}}</td>
                 <td>{{ x.documento }}</td>
                 <td>{{ x.departamento }}</td>
                 <td>{{ x.nota }}</td>
                 <td>{{ x.autor }}</td> 
+                <td><a href= "{% url "editar_estados" x.id %}">{{ x.estado }}</a></td> 
             </tr>
         {% empty %}
             <tr>
@@ -41,6 +43,4 @@
     </tbody>
 </table>
 {% endblock %}
-
-
-
+        

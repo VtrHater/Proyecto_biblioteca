@@ -27,7 +27,7 @@ class Solicitudes(models.Model):
         ('Rechazada','Rechazada')
     ]
     DEPARTAMENTOS = [
-        ("placeholder","Nada"),
+        ("placeholder","Seleccionar"),
         ("Matematicas","Matematicas"),
         ("Paleontologia","Paleontologia"),
         ("Restauracion","Restauracion"),
@@ -44,8 +44,12 @@ class Solicitudes(models.Model):
     estado = models.CharField(max_length=20, choices=ESTADOS, default='pendiente')
 
     def __str__(self):
-        return self.documento+"- "+self.autor
+        return f"{self.documento} - {self.autor}"
     
+    class Meta:
+        ordering = ['-fecha']  # Ordena por fecha de manera ascendente
+        ordering = ['departamento']
 
+   
 
     
