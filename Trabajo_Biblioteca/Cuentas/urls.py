@@ -5,7 +5,7 @@ from .views import filtrar_solicitudes_usuario
 
 urlpatterns = [
 
-    path('Home/', views.Home, name= "Home"),
+    path('', views.Home, name= "Home"),
     path('crear_cuenta/', views.registrar, name= 'signin'),
     path('cerrar_sesion/', views.cerrar_sesion, name='cerrar_sesion'),
     path('iniciar_sesion/',views.iniciar_sesion, name='iniciar_sesion'),
@@ -18,7 +18,8 @@ urlpatterns = [
     path("editar_personales/", views.editar_personal, name= "Editar_Personales"),
     path("editar_personales/<int:lol>", views.editar_solicitud_personal, name="editar_solicitud_personal"),
     path("editar_departamental/", views.editar_departamento, name= "filtrar_solicitudes_usuario_estados"),
-    path("editar_estados/<int:lol>", views.editar_estados, name="editar_estados")
+    path("editar_estados/<int:lol>", views.editar_estados, name="editar_estados"),
+    path("solicitudes_existentes/prioridades", views.prioridades, name="Prioridad"),
     
 ]
 

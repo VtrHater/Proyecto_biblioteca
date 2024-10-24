@@ -84,7 +84,7 @@ def filtrar_activas(request):
     # Si el parámetro 'activas' está en la URL y es 'true'
     if 'activas' in request.GET and request.GET['activas'] == 'true':
         # Filtrar las solicitudes que no están en estado 'completada'
-        var_activas = Solicitudes.objects.exclude(estado='completada')
+        var_activas = Solicitudes.objects.exclude(estado='Completada')
     else:
         # Mostrar todas las solicitudes si el parámetro no está presente
         var_activas = Solicitudes.objects.all()
@@ -172,3 +172,12 @@ def filtrar_solicitudes_usuario_estados(request):
         var_s_usuario = Solicitudes.objects.none()  # Si no está autenticado, no se muestra nada
     return render(request, 'editar_departamento.html', {'contexto': var_s_usuario,"activas":valor})
     
+def prioridades(request):
+    soli_MI= Solicitudes.objects.filter(prioridad="Muy Importante")
+    soli_I= Solicitudes.objects.filter(prioridad="Importante")
+    soli_PI= Solicitudes.objects.filter(prioridad="Poco Importante")
+    return render(request,"prioridad.html", {
+        "MI":soli_MI,
+        "I":soli_I,
+        "PI":soli_PI
+    })

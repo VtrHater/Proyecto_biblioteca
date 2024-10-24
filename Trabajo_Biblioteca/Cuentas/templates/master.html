@@ -9,7 +9,7 @@
     <nav>
         <ul>
             <li>
-                <a href="/Home">Home</a>
+                <a href="{% url 'Home' %}">Home</a>
             </li>
             {% if user.is_authenticated %}  
             <li>

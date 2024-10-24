@@ -33,7 +33,7 @@
                 <td>{{ x.departamento }}</td>
                 <td>{{ x.nota }}</td>
                 <td>{{ x.autor }}</td> 
-                <td><a href= "{% url "editar_estados" x.id %}">{{ x.estado }}</a></td> 
+                <td><a href= "{% url 'editar_estados' x.id %}">{{ x.estado }}</a></td> 
             </tr>
         {% empty %}
             <tr>

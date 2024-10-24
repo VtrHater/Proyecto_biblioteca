@@ -36,12 +36,18 @@ class Solicitudes(models.Model):
         ("Novelas","Novelas"),
         ("cuentos","Cuentos"),
         ]
+    Prioridad=[
+        ("Muy Importante","Muy Importante"),
+        ("Importante","Importante"),
+        ("Poco Importante","Poco Importante")
+    ]
     documento = models.CharField(max_length=100)
     departamento = models.CharField(max_length=60, choices=DEPARTAMENTOS,default="placeholder")
     nota = models.TextField(blank=True)
     fecha = models.DateTimeField(auto_now_add=True)
     autor = models.CharField(max_length=60)
     estado = models.CharField(max_length=20, choices=ESTADOS, default='pendiente')
+    prioridad= models.CharField(max_length=120, choices=Prioridad, default="Importante")
 
     def __str__(self):
         return f"{self.documento} - {self.autor}"
