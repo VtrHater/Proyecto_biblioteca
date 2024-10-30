@@ -90,7 +90,7 @@ def filtrar_activas(request):
         var_activas = Solicitudes.objects.all()
 
     # Renderizar la plantilla con el contexto de las solicitudes filtradas
-    return render(request, 'solicitudes_existentes.html', {'contexto': var_activas})
+    return render(request, 'solicitudes_activas.html', {'contexto': var_activas})
 
 def filtrar_solicitudes_usuario(request):
     valor= request.GET
