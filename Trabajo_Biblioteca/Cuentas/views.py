@@ -5,6 +5,8 @@ from django.contrib.auth import login, logout, authenticate
 from django.http import HttpResponse
 from .forms import solicitudesform,estadosSolicitudesform
 from .models import Solicitudes, Personal
+import mimetypes
+import os
 
 def registrar(request):
     if request.method == "GET":
@@ -181,3 +183,15 @@ def prioridades(request):
         "I":soli_I,
         "PI":soli_PI
     })
+def administrador(request):
+    return render(request, "administrador.html")
+
+def descargar(request):
+    BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+    nom_archivo = "registro.txt"
+    filepath = BASE_DIR + "\\" + nom_archivo
+    path = open(filepath, "r")
+    mime_type, _ = mimetypes.guess_type(filepath)
+    response = HttpResponse(path, content_type = mime_type)
+    response["content_disposition"] = "attachment; nombre={}".format(nom_archivo)
+    return response
