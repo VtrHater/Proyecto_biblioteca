@@ -40,26 +40,23 @@
             </li>
             {% endif %}
         </ul>
+    <!--
     <a href="{% url 'filtrar_activas' %}?activas=true">
-        <button>Solicitudes activas</button>
+        <button style="background-color: #28a745; color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer;">
+            Solicitudes Activas
+        </button>    
     </a>
+    -->
     <br>
     <br>
-    <a href="{% url 'filtrar_solicitudes_usuario' %}?activas=True">
-        <button>Mis Solicitudes</button>
-    </a>
-    <br>
-    <br>
+    <!--
     <a href="{% url 'Prioridad' %}">
         <button>Ordenar por Prioridad</button>
     </a>
+    -->
     <br>
-    <br>
-    <a href="{% url 'Home' %}">
-        <button>Volver a inicio</button>
-    </a>
     
-    <h2>Lista de Solicitudes</h2>
+    <h2>Mis Solicitudes</h2>
     <table>
         <thead>
             <tr>
@@ -95,11 +92,18 @@
     <br>
     {% if activas %}
     <a href="editar_solicitud/?activas=True">
-        <button>Editar una Solicitud</button>
+        <button style="background-color: #ff8c00; color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer;">
+            Editar una Solicitud
+        </button>
     </a>
     <br>
     <br>
     {% endif %}
+    <a href="/solicitudes_existentes">
+        <button style="background-color: #00aaff; color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer;">
+            Volver a solicitudes
+        </button>
+    </a>
     
 </body>
 

@@ -1,18 +1,45 @@
 {% extends 'master.html' %}
 
 {% block content %}
-<h1>Iniciar Sesion</h1>
+<div style="max-width: 400px; margin: auto; padding: 20px; border: 1px solid #ccc; border-radius: 5px; box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);">
+    <h1 style="text-align: center;">Iniciar Sesión</h1>
 
-{{error}}
+    {% if error %}
+        <p style="color: red; text-align: center;">{{ error }}</p>
+    {% endif %}
 
-<form action="/iniciar_sesion/" method="POST">
-    {% csrf_token %}
+    <form action="/iniciar_sesion/" method="POST">
+        {% csrf_token %}
+        
+        <div style="margin-bottom: 15px;">
+            <label for="username">{{ form.username.label }}</label><br>
+            {{ form.username }}  <!-- Esto incluye el campo de entrada -->
+        </div>
+        
+        <div style="margin-bottom: 15px;">
+            <label for="password">{{ form.password.label }}</label><br>
+            {{ form.password }}  <!-- Esto incluye el campo de entrada -->
+        </div>
+
+        <button type="submit" style="width: 100%; padding: 10px; background-color: #80CFAF; color: white; border: none; border-radius: 5px; cursor: pointer;">
+            Iniciar Sesión
+        </button>
+    </form>
+
+    <script>
+        const button = document.querySelector('button[type="submit"]');
+        button.addEventListener('mouseover', function() {
+            button.style.backgroundColor = '#66B49A'; // Color más oscuro al pasar el mouse
+        });
+        button.addEventListener('mouseout', function() {
+            button.style.backgroundColor = '#80CFAF'; // Color original al salir el mouse
+        });
+    </script>
     
-    {{form.as_p}}
-
-    <button>
-        Iniciar Sesion
-    </button>
-</form>
+    <p style="text-align: center; margin-top: 10px;">
+        ¿No tienes una cuenta? <a href="/crear_cuenta">Regístrate aquí</a>
+    </p>
+</div>
 
 {% endblock %}
+

@@ -20,7 +20,8 @@ urlpatterns = [
     path("editar_departamental/", views.editar_departamento, name= "filtrar_solicitudes_usuario_estados"),
     path("editar_estados/<int:lol>", views.editar_estados, name="editar_estados"),
     path("solicitudes_existentes/prioridades", views.prioridades, name="Prioridad"),
-    
+    path('administrador/', views.administrador, name='administrador'),
+    path("descargar/", views.descargar, name='descargar'),
 ]
 
     
