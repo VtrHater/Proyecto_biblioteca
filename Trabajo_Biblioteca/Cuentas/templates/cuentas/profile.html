@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Perfil de Funcionario</title>
+</head>
+<body>
+    <h1>Bienvenido, {{ request.user.username }}</h1>
+    <p><strong>Nombre:</strong>{{ usuario.first_name }}{{ usuario.last_name }}</p>
+    <p><strong>Correo electrónico:</strong> {{ usuario.email }}</p>
+    {% if usuario.profile.image %}
+       <img src="{{usuario.profile.image.url}}" alt="Foto de perfil">
+    {% endif %}
+
+    <h3>Notificaciones</h3>
+    <ul>
+        {% if notifications  %}
+            {% for notification in notifications %}
+                <li>{{ notification.message }} - {{ notification.timestamp }}</li>
+            {% endfor %}
+        {% else %}
+            <li>No tienes notificaciones nuevas.</li>
+        {% endif %}
+    </ul>
+</body>
+</html>

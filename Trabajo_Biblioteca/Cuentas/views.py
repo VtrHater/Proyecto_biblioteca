@@ -2,11 +2,14 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth.models import User
 from django.contrib.auth import login, logout, authenticate
+from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse
+from .models import Notification
 from .forms import solicitudesform,estadosSolicitudesform
 from .models import Solicitudes, Personal
 import mimetypes
 import os
+
 
 def registrar(request):
     if request.method == "GET":
@@ -70,8 +73,6 @@ def solicitud(request):
             data["form"] = formulario
 
     return render(request, 'solicitudes.html', data)
-
-
 
 def soliexistentes(request):
     variable = Solicitudes.objects.values() #values. variable es la info.
@@ -195,3 +196,9 @@ def descargar(request):
     response = HttpResponse(path, content_type = mime_type)
     response["content_disposition"] = "attachment; nombre={}".format(nom_archivo)
     return response
+
+def profile_view(request):
+    notifications = []
+    if request.user.is_authenticated:
+        notifications = Notification.objects.filter(user=request.user)
+    return render(request, 'cuentas/profile.html', {'notifications': notifications})

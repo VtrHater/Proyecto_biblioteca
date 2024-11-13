@@ -22,6 +22,7 @@ urlpatterns = [
     path("solicitudes_existentes/prioridades", views.prioridades, name="Prioridad"),
     path('administrador/', views.administrador, name='administrador'),
     path("descargar/", views.descargar, name='descargar'),
+    path('perfil/', views.profile_view, name='perfil'),
 ]
 
     
