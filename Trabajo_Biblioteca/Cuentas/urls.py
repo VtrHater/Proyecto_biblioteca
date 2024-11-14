@@ -25,6 +25,7 @@ urlpatterns = [
     path('perfil/', views.profile_view, name='perfil'),
     path('redireccion_solicitudes/', views.redirigir_solicitudes, name='redirigir_solicitudes'),
     path('prioridades_usuario/', views.prioridades_usuario, name='prioridades_usuario'),
+    path('solicitudes_dep/', views.soli_dep , name='solicitudes_dep'),
 ]
 
     

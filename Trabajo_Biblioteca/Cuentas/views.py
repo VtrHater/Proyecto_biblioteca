@@ -106,8 +106,7 @@ def filtrar_solicitudes_usuario(request):
 
 
 def editar_mis_solicitudes(request):
-    if request.GET:
-        return render(request, "editar_mis_solicitudes.html")
+     return render(request, "editar_mis_solicitudes.html")
         
 def editar_personal(request):
     if request.user.is_authenticated:
@@ -222,3 +221,6 @@ def redirigir_solicitudes(request):
         return redirect('filtrar_solicitudes_usuario') 
     else:
         return redirect('Home')  
+    
+def soli_dep(request):
+    return render(request, 'solicitudes_dep.html')

@@ -41,22 +41,29 @@
             </li>
             {% endif %}
         </ul>
+    
+    
+    
     <br>
-    
-    
-    <a href="{% url 'solicitudes_dep' %}">
-        <button style="background-color: #007bff; color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer;">
-            Solicitudes departamento
+    <br>
+    <a href="{% url 'Edit' %}">
+        <button style="background-color: #ff0077; color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer;">
+            Editar solicitudes
         </button>
     </a>
-    
+    <br>
+    <br>
+    <a href="{% url 'prioridades_usuario' %}">
+        <button style="background-color: #ff8c00; color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer;">
+            Ordenar por Prioridad
+        </button>
+    </a>
+    <br>
+    <br>
     
     <br>
     
-    
-    <br>
-    
-    <h2>Mis Solicitudes</h2>
+    <h2>Solicitudes departamento</h2>
     <table>
         <thead>
             <tr>
@@ -106,6 +113,11 @@
         </button>
     </a>
     -->
+    <a href="/mis_solicitudes">
+        <button style="background-color: #00aaff; color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer;">
+            Volver a Mis Solicitudes
+        </button>
+    </a>
     
 </body>
 

@@ -1,16 +1,33 @@
 {% extends 'master.html' %}
 
 {% block content %}
-<h1>Crea tu cuenta</h1>
-<form action="/crear_cuenta/" method="POST">
-    {% csrf_token %}
+{% load crispy_forms_tags %}
 
-    {{error}}
-    {{form.as_p}}
+<div class="row">
 
-    <button>
-        Crear cuenta
-    </button>
+    <div class="col-12 col-md-6 offset-md-3">
+        <div class="card">
+            <div class="card-body">
+                    <h2>Crea tu cuenta</h2>
+                    <hr>
+                    <form action ="/crear_cuenta/" class="formulario" method ="POST">
 
-</form>
+                        {% csrf_token %}
+
+                        {{error}}
+                        {{ form.as_p  }}
+                
+                        <br>
+                        <div class="d-flex justify-content-end">
+                            <button type="submit" id="btnEnviar" class="btn btn-primary">Crear cuenta</button>
+                        </div>
+                
+                    </form>
+
+            </div>
+        </div>
+            
+    </div>
+</div>
+
 {% endblock %}
