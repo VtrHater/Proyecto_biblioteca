@@ -24,7 +24,7 @@ def registrar(request):
                 user = User.objects.create_user(username=request.POST['username'], password=request.POST['password1'])
                 user.save()
                 login(request, user)
-                return redirect("Solicitudes")
+                return redirect("Home")
             except: 
                 return render(request, "base.html",{
                 "form": UserCreationForm,
@@ -93,17 +93,31 @@ def filtrar_activas(request):
     return render(request, 'solicitudes_activas.html', {'contexto': var_activas})
 
 def filtrar_solicitudes_usuario(request):
-    valor= request.GET
     if request.user.is_authenticated:
-        user_name = request.user.username 
+        usuario = request.user.username
+        soli_usuario= Solicitudes.objects.filter(autor=usuario)
+    else:
+        soli_usuario= Solicitudes.objects.none()
+    return render(request,"mis_solicitudes.html", {"contexto":soli_usuario})
+
+       
+'''if request.user.is_authenticated:      #Filtrar por departamentos al que se pertenece
+        usuario= request.user.id
+        department= Personal.objects.values_list("sector").filter(name=usuario)
+        department= department[0][0]
+        entregar= Solicitudes.objects.filter(departamento=department).values()
+        return render(request, 'mis_solicitudes.html', {"contexto":entregar})
+        '''
+"""
+valopr= request.GET
+user_name = request.user.username            #Codigo pasado (lo dejo por si acaso, pero desconozco su uso practico)
         departamento = valor.get('departamento') 
         if departamento and departamento != "placeholder":
             var_s_usuario = var_s_usuario.filter(departamento=departamento)
         var_s_usuario = Solicitudes.objects.filter(autor=user_name)
     else:
         var_s_usuario = Solicitudes.objects.none()
-    return render(request, 'mis_solicitudes.html', {'contexto': var_s_usuario,"activas":valor})
-
+    return render(request, 'mis_solicitudes.html', {'contexto': var_s_usuario,"activas":valor})"""
 
 def editar_mis_solicitudes(request):
      return render(request, "editar_mis_solicitudes.html")
@@ -137,8 +151,11 @@ def editar_por_departamento(request):
     
 def editar_departamento(request):
     if request.user.is_authenticated:
-        usuario = request.user.username
-        soli_usuario= Solicitudes.objects.filter(autor=usuario)
+        usuario= request.user.id
+        department= Personal.objects.values_list("sector").filter(name=usuario)
+        department= department[0][0]
+        entregar= Solicitudes.objects.filter(departamento=department).values()
+        return render(request, "editar_solicitud_departamento.html",{"valor":entregar})
     else:
         soli_usuario= Solicitudes.objects.none()
     return render(request,"editar_solicitud_departamento.html", {"valor":soli_usuario})
@@ -223,4 +240,9 @@ def redirigir_solicitudes(request):
         return redirect('Home')  
     
 def soli_dep(request):
-    return render(request, 'solicitudes_dep.html')
+    if request.user.is_authenticated:      #Filtrar por departamentos al que se pertenece
+        usuario= request.user.id
+        department= Personal.objects.values_list("sector").filter(name=usuario)
+        department= department[0][0]
+        entregar= Solicitudes.objects.filter(departamento=department).values()
+        return render(request, 'solicitudes_dep.html', {"contexto":entregar})

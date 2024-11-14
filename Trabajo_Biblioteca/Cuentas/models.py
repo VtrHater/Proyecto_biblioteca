@@ -11,7 +11,7 @@ class Personal(models.Model):
         ("Digitalizacion","Digitalizacion"),
         ("libritos","Libreria"),
         ("Novelas","Novelas"),
-        ("cuentos","Cuentos"),
+        ("Cuentos","Cuentos"),
         ]
     name = models.ForeignKey(User, on_delete=models.PROTECT)
     sector = models.CharField(max_length=60, choices=DEPARTAMENTOS,default="placeholder")
