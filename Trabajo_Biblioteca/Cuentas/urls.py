@@ -23,6 +23,8 @@ urlpatterns = [
     path('administrador/', views.administrador, name='administrador'),
     path("descargar/", views.descargar, name='descargar'),
     path('perfil/', views.profile_view, name='perfil'),
+    path('redireccion_solicitudes/', views.redirigir_solicitudes, name='redirigir_solicitudes'),
+    path('prioridades_usuario/', views.prioridades_usuario, name='prioridades_usuario'),
 ]
 
     

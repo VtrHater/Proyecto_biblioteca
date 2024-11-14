@@ -9,6 +9,8 @@ from .forms import solicitudesform,estadosSolicitudesform
 from .models import Solicitudes, Personal
 import mimetypes
 import os
+from django.shortcuts import redirect
+from django.contrib.auth.decorators import login_required
 
 
 def registrar(request):
@@ -84,31 +86,25 @@ def solicitudes_lista(request):
 
 
 def filtrar_activas(request):
-    # Si el parámetro 'activas' está en la URL y es 'true'
     if 'activas' in request.GET and request.GET['activas'] == 'true':
-        # Filtrar las solicitudes que no están en estado 'completada'
         var_activas = Solicitudes.objects.exclude(estado='Completada')
     else:
-        # Mostrar todas las solicitudes si el parámetro no está presente
         var_activas = Solicitudes.objects.all()
-
-    # Renderizar la plantilla con el contexto de las solicitudes filtradas
     return render(request, 'solicitudes_activas.html', {'contexto': var_activas})
 
 def filtrar_solicitudes_usuario(request):
     valor= request.GET
     if request.user.is_authenticated:
-        user_name = request.user.username  # Suponiendo que quieres usar el nombre de usuario
+        user_name = request.user.username 
         departamento = valor.get('departamento') 
         if departamento and departamento != "placeholder":
             var_s_usuario = var_s_usuario.filter(departamento=departamento)
-        # Filtrar las solicitudes que ha creado el usuario
-        # Más adelante se debe hacer la conexión del usuario con el departamento al cual pertenece.
         var_s_usuario = Solicitudes.objects.filter(autor=user_name)
     else:
-        var_s_usuario = Solicitudes.objects.none()  # Si no está autenticado, no se muestra nada
+        var_s_usuario = Solicitudes.objects.none()
     return render(request, 'mis_solicitudes.html', {'contexto': var_s_usuario,"activas":valor})
-    
+
+
 def editar_mis_solicitudes(request):
     if request.GET:
         return render(request, "editar_mis_solicitudes.html")
@@ -164,15 +160,13 @@ def editar_estados(request, lol):
 def filtrar_solicitudes_usuario_estados(request):
     valor= request.GET
     if request.user.is_authenticated:
-        user_name = request.user.username  # Suponiendo que quieres usar el nombre de usuario
+        user_name = request.user.username  
         departamento = valor.get('departamento') 
         if departamento and departamento != "placeholder":
             var_s_usuario = var_s_usuario.filter(departamento=departamento)
-        # Filtrar las solicitudes que ha creado el usuario
-        # Más adelante se debe hacer la conexión del usuario con el departamento al cual pertenece.
         var_s_usuario = Solicitudes.objects.filter(autor=user_name)
     else:
-        var_s_usuario = Solicitudes.objects.none()  # Si no está autenticado, no se muestra nada
+        var_s_usuario = Solicitudes.objects.none()  
     return render(request, 'editar_departamento.html', {'contexto': var_s_usuario,"activas":valor})
     
 def prioridades(request):
@@ -184,6 +178,23 @@ def prioridades(request):
         "I":soli_I,
         "PI":soli_PI
     })
+
+def prioridades_usuario(request):
+    if request.user.is_authenticated:
+        usuario = request.user.id  
+        department = Personal.objects.filter(name=usuario).values_list("sector", flat=True).first()
+        if department is None:
+            department = "placeholder"  
+        soli_MI = Solicitudes.objects.filter(prioridad="Muy Importante", departamento=department)
+        soli_I = Solicitudes.objects.filter(prioridad="Importante", departamento=department)
+        soli_PI = Solicitudes.objects.filter(prioridad="Poco Importante", departamento=department)
+        
+        return render(request, "prioridad_usuario.html", {
+            "MI": soli_MI,
+            "I": soli_I,
+            "PI": soli_PI
+        })
+
 def administrador(request):
     return render(request, "administrador.html")
 
@@ -202,3 +213,12 @@ def profile_view(request):
     if request.user.is_authenticated:
         notifications = Notification.objects.filter(user=request.user)
     return render(request, 'cuentas/profile.html', {'notifications': notifications})
+
+@login_required
+def redirigir_solicitudes(request):
+    if request.user.groups.filter(name='Usuarios_jefes').exists():
+        return redirect('soliexistentes')  
+    elif request.user.groups.filter(name='Usuarios_general').exists():
+        return redirect('filtrar_solicitudes_usuario') 
+    else:
+        return redirect('Home')  

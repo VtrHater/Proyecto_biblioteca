@@ -19,6 +19,6 @@ class estadosSolicitudesform(forms.ModelForm):
     # Disable the 'estado' field (or any other field you want)
         self.fields['documento'].disabled = True
         self.fields['departamento'].disabled = True
-        self.fields['nota'].disabled = True
+        self.fields['nota'].disabled = False
         self.fields['autor'].disabled = True
 

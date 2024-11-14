@@ -41,6 +41,7 @@
             {% endif %}
 
         </ul>
+    <br>
     <a href="{% url 'filtrar_activas' %}?activas=true">
         <button style="background-color: #28a745; color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer;">
             Solicitudes Activas
@@ -48,16 +49,16 @@
     </a>
     <br>
     <br>
-    <a href="{% url 'filtrar_solicitudes_usuario' %}?activas=True">
-        <button style="background-color: #007bff; color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer;">
-            Mis Solicitudes
-        </button>
-    </a>
-    <br>
-    <br> 
     <a href="{% url 'Prioridad' %}">
         <button style="background-color: #00aaff; color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer;">
             Ordenar por Prioridad
+        </button>
+    </a>
+    <br>
+    <br>
+    <a href="{% url 'descargar' %}">
+        <button style="background-color: #d4d716; color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer;">
+            Visualizar inicios y cierres de sesión
         </button>
     </a>
     <br>
@@ -95,16 +96,6 @@
         </tbody>
     </table>
     <br>
-    <!--
-    <br>
-    {% if activas %}
-    <a href="editar_solicitud/?activas=True">
-        <button>Editar una Solicitud</button>
-    </a>
-    <br>
-    <br>
-    {% endif %}
-    -->
 </body>
 
 </html>
