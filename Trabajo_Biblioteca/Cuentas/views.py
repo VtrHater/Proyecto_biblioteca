@@ -95,7 +95,7 @@ def filtrar_activas(request):
 def filtrar_solicitudes_usuario(request):
     if request.user.is_authenticated:
         usuario = request.user.username
-        soli_usuario= Solicitudes.objects.filter(autor=usuario)
+        soli_usuario= Solicitudes.objects.filter(funcionario=usuario)
     else:
         soli_usuario= Solicitudes.objects.none()
     return render(request,"mis_solicitudes.html", {"contexto":soli_usuario})
@@ -114,7 +114,7 @@ user_name = request.user.username            #Codigo pasado (lo dejo por si acas
         departamento = valor.get('departamento') 
         if departamento and departamento != "placeholder":
             var_s_usuario = var_s_usuario.filter(departamento=departamento)
-        var_s_usuario = Solicitudes.objects.filter(autor=user_name)
+        var_s_usuario = Solicitudes.objects.filter(funcionario=user_name)
     else:
         var_s_usuario = Solicitudes.objects.none()
     return render(request, 'mis_solicitudes.html', {'contexto': var_s_usuario,"activas":valor})"""
@@ -125,7 +125,7 @@ def editar_mis_solicitudes(request):
 def editar_personal(request):
     if request.user.is_authenticated:
         usuario = request.user.username
-        soli_usuario= Solicitudes.objects.filter(autor=usuario)
+        soli_usuario= Solicitudes.objects.filter(funcionario=usuario)
     else:
         soli_usuario= Solicitudes.objects.none()
     return render(request,"editar_personales.html", {"valor":soli_usuario})
@@ -180,7 +180,7 @@ def filtrar_solicitudes_usuario_estados(request):
         departamento = valor.get('departamento') 
         if departamento and departamento != "placeholder":
             var_s_usuario = var_s_usuario.filter(departamento=departamento)
-        var_s_usuario = Solicitudes.objects.filter(autor=user_name)
+        var_s_usuario = Solicitudes.objects.filter(funcionario=user_name)
     else:
         var_s_usuario = Solicitudes.objects.none()  
     return render(request, 'editar_departamento.html', {'contexto': var_s_usuario,"activas":valor})

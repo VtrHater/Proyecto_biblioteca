@@ -18,20 +18,24 @@
     <thead>
         <tr>
             <th>Documento</th>
-            <th>Nombre</th>
+            <th>Autor</th>
+            <th>Fecha de publicación</th>
             <th>Departamento</th>
             <th>Nota</th>
-            <th>Autor</th>
+            <th>Fecha de creación</th>
+            <th>estado</th>
         </tr>
     </thead>
     <tbody>
         {% for x in valor %}
             <tr>
                 <td><a href= "{% url 'editar_solicitud_personal' x.id %}">{{x.documento}}</a></td>
-                <td>{{ x.documento }}</td>
+                <td>{{ x.autor }}</td> 
+                <td>{{ x.fecha_publicación }}</td>
                 <td>{{ x.departamento }}</td>
                 <td>{{ x.nota }}</td>
-                <td>{{ x.autor }}</td> 
+                <td>{{ x.fecha }}</td>
+                <td>{{ x.estado}}</td>
             </tr>
         {% empty %}
             <tr>

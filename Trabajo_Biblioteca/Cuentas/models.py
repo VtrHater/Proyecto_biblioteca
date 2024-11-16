@@ -5,13 +5,20 @@ from django.contrib.auth.models import User
 class Personal(models.Model):
     DEPARTAMENTOS = [
         ("placeholder","Nada"),
-        ("Matematicas","Matematicas"),
-        ("Paleontologia","Paleontologia"),
-        ("Restauracion","Restauracion"),
-        ("Digitalizacion","Digitalizacion"),
-        ("libritos","Libreria"),
-        ("Novelas","Novelas"),
-        ("Cuentos","Cuentos"),
+        ("Extensión Cultural","Extensión Cultural"),
+        ("Servicio de atención a usuarios","Servicio de atención a usuarios"),
+        ("Conservación","Conservación"),
+        ("Digitalización","Digitalización"),
+        ("Depósito Legal","Depósito Legal"),
+        ("Adquisiciones Bibliográficas","Adquisiciones Bibliográficas"),
+        ("Depósito Legal Electrónico","Depósito Legal Electrónico"),
+        ("Mapoteca","Mapoteca"),
+        ("Láminas y estampas","Láminas y estampas"),
+        ("Fotográfico y audiovisual","Fotográfico y audiovisual"),
+        ("Periódicos","Periódicos"),
+        ("Hemeroteca","Hemeroteca"),
+        ("Fondo General","Fondo General"),
+        ("Sección Chilena","Sección Chilena")
         ]
     name = models.ForeignKey(User, on_delete=models.PROTECT)
     sector = models.CharField(max_length=60, choices=DEPARTAMENTOS,default="placeholder")
@@ -28,13 +35,20 @@ class Solicitudes(models.Model):
     ]
     DEPARTAMENTOS = [
         ("placeholder","Seleccionar"),
-        ("Matematicas","Matematicas"),
-        ("Paleontologia","Paleontologia"),
-        ("Restauracion","Restauracion"),
-        ("Digitalizacion","Digitalizacion"),
-        ("libritos","Libreria"),
-        ("Novelas","Novelas"),
-        ("cuentos","Cuentos"),
+        ("Extensión Cultural","Extensión Cultural"),
+        ("Servicio de atención a usuarios","Servicio de atención a usuarios"),
+        ("Conservación","Conservación"),
+        ("Digitalización","Digitalización"),
+        ("Depósito Legal","Depósito Legal"),
+        ("Adquisiciones Bibliográficas","Adquisiciones Bibliográficas"),
+        ("Depósito Legal Electrónico","Depósito Legal Electrónico"),
+        ("Mapoteca","Mapoteca"),
+        ("Láminas y estampas","Láminas y estampas"),
+        ("Fotográfico y audiovisual","Fotográfico y audiovisual"),
+        ("Periódicos","Periódicos"),
+        ("Hemeroteca","Hemeroteca"),
+        ("Fondo General","Fondo General"),
+        ("Sección Chilena","Sección Chilena")
         ]
     Prioridad=[
         ("Muy Importante","Muy Importante"),
@@ -42,10 +56,15 @@ class Solicitudes(models.Model):
         ("Poco Importante","Poco Importante")
     ]
     documento = models.CharField(max_length=100)
+    autor = models.CharField(max_length=60,blank=True)
+    fecha_publicación = models.CharField(max_length=20,blank=True)
+    número_de_sistema = models.CharField(max_length=20,blank=True)
+    ubicación = models.CharField(max_length=20,blank=True)
     departamento = models.CharField(max_length=60, choices=DEPARTAMENTOS,default="placeholder")
     nota = models.TextField(blank=True)
     fecha = models.DateTimeField(auto_now_add=True)
-    autor = models.CharField(max_length=60)
+    plazo = models.CharField(max_length=20, blank=True)
+    funcionario = models.CharField(max_length=60)
     estado = models.CharField(max_length=20, choices=ESTADOS, default='pendiente')
     prioridad= models.CharField(max_length=120, choices=Prioridad, default="Importante")
 

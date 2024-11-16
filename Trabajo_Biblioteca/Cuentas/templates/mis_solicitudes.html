@@ -82,11 +82,16 @@
             <tr>
                 <th>ID</th>
                 <th>Documento</th>
+                <th>Autor</th>
+                <th>Fecha de publicación</th>
+                <th>Número de sistema</th>
+                <th>Ubicación</th>
                 <th>Departamento encargado</th>
                 <th>Nota</th>
-                <th>Fecha</th>
-                <th>Autor</th>
-                <th>Modificar Estado</th>
+                <th>Fecha de creación</th>
+                <th>Plazo</th>
+                <th>Funcionario</th>
+                <th>Estado</th>
             </tr>
         </thead>
         <tbody>
@@ -94,10 +99,15 @@
                 <tr>
                     <td>{{ x.id }}</td>
                     <td>{{ x.documento }}</td>
+                    <td>{{ x.autor }}</td>
+                    <td>{{ x.fecha_publicación }}</td>
+                    <td>{{ x.número_de_sistema }}</td>
+                    <td>{{ x.ubicación }}</td>
                     <td>{{ x.departamento }}</td>
                     <td>{{ x.nota }}</td>
                     <td>{{ x.fecha }}</td>
-                    <td>{{ x.autor }}</td>
+                    <td>{{ x.plazo }}</td>
+                    <td>{{ x.funcionario }}</td>
                     <td>{{ x.estado }}</a></td> 
                 </tr>
             {% empty %}
