@@ -4,13 +4,16 @@ from django.contrib.auth.models import User
 from django.contrib.auth import login, logout, authenticate
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse
-from .models import Notification
-from .forms import solicitudesform,estadosSolicitudesform
+from .models import Notification, Profile
+from .forms import NotificationForm, solicitudesform,estadosSolicitudesform
 from .models import Solicitudes, Personal
 import mimetypes
 import os
 from django.shortcuts import redirect
 from django.contrib.auth.decorators import login_required
+from .forms import ProfileForm, UserForm
+from django.contrib.auth.decorators import login_required
+from django.contrib import messages
 
 
 def registrar(request):
@@ -224,12 +227,6 @@ def descargar(request):
     response["content_disposition"] = "attachment; nombre={}".format(nom_archivo)
     return response
 
-def profile_view(request):
-    notifications = []
-    if request.user.is_authenticated:
-        notifications = Notification.objects.filter(user=request.user)
-    return render(request, 'cuentas/profile.html', {'notifications': notifications})
-
 @login_required
 def redirigir_solicitudes(request):
     if request.user.groups.filter(name='Usuarios_jefes').exists():
@@ -246,3 +243,62 @@ def soli_dep(request):
         department= department[0][0]
         entregar= Solicitudes.objects.filter(departamento=department).values()
         return render(request, 'solicitudes_dep.html', {"contexto":entregar})
+
+@login_required
+def editar_perfil(request):
+    try:
+        profile = request.user.profile
+    except Profile.DoesNotExist:
+        profile = Profile.objects.create(user=request.user)
+    if request.method == 'POST':
+        user_form = UserForm(request.POST, instance=request.user)
+        profile_form = ProfileForm(request.POST, request.FILES, instance=request.user.profile)
+        if user_form.is_valid() and profile_form.is_valid():
+            user_form.save()
+            profile_form.save()
+            messages.success(request, '¡Tus datos se han guardado correctamente!')
+            return redirect('perfil') 
+    else:
+        user_form = UserForm(instance=request.user)
+        profile_form = ProfileForm(instance=request.user.profile)
+
+    return render(request, 'cuentas/editar_perfil.html', {
+        'user_form': user_form,
+        'profile_form': profile_form
+    })
+
+@login_required
+def enviar_notificacion(request):
+    if request.method == 'POST':
+        form = NotificationForm(request.POST)
+        if form.is_valid():
+            usuarios = form.cleaned_data['usuarios']  
+            message = form.cleaned_data['message']   
+            for usuario in usuarios:
+                Notification.objects.create(
+                    user=usuario,
+                    sender=request.user,  
+                    message=message
+                )
+            
+    else:
+        form = NotificationForm()
+
+    return render(request, 'cuentas/enviar_notificacion.html', {'form': form})
+
+@login_required
+def profile_view(request):
+    user_notifications = Notification.objects.filter(user=request.user).order_by('-timestamp')
+    unread_count = user_notifications.filter(is_read=False).count()
+    return render(request, 'cuentas/profile.html', {
+        'notifications': user_notifications,
+        'unread_count': unread_count
+    })
+
+@login_required
+def mark_as_read(request):
+    notification = Notification.objects.get(id=notification, user=request.user)
+    notification.is_read = True
+    notification.save()
+    return redirect('profile')
+   

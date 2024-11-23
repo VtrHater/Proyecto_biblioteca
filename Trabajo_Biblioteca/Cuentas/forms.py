@@ -1,5 +1,9 @@
 from django import forms
 from .models import Solicitudes
+from .models import Profile
+from django.contrib.auth.models import User
+from .models import Notification
+
 
 class solicitudesform(forms.ModelForm):
 
@@ -28,3 +32,26 @@ class estadosSolicitudesform(forms.ModelForm):
         self.fields['funcionario'].disabled = True
         self.fields['prioridad'].disabled = True
 
+class ProfileForm(forms.ModelForm):
+    class Meta:
+        model = Profile
+        fields = ['telefono', 'departamento', 'imagen']
+
+class UserForm(forms.ModelForm):
+    class Meta:
+        model = User
+        fields = ['first_name', 'last_name', 'email']
+
+class NotificationForm(forms.ModelForm):
+    usuarios = forms.ModelMultipleChoiceField(
+        queryset=User.objects.all(),
+        widget=forms.SelectMultiple(attrs={'class': 'form-control'}),
+        required=True,
+        label="Seleccionar Funcionarios"
+    )
+    class Meta:
+        model = Notification
+        fields = ['usuarios', 'message']
+        widgets = {
+            'message': forms.Textarea(attrs={'class': 'form-control', 'placeholder': 'Escribe tu notificación'}),
+        }
