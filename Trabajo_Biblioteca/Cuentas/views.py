@@ -10,10 +10,13 @@ from .models import Solicitudes, Personal
 import mimetypes
 import os
 from django.shortcuts import redirect
-from django.contrib.auth.decorators import login_required
 from .forms import ProfileForm, UserForm
-from django.contrib.auth.decorators import login_required
 from django.contrib import messages
+from django.http.response import HttpResponse
+from django.views.generic.base import TemplateView
+from openpyxl import Workbook
+from openpyxl.styles import Alignment,Border,Font,PatternFill,Side
+from datetime import datetime
 
 
 def registrar(request):
@@ -103,24 +106,6 @@ def filtrar_solicitudes_usuario(request):
         soli_usuario= Solicitudes.objects.none()
     return render(request,"mis_solicitudes.html", {"contexto":soli_usuario})
 
-       
-'''if request.user.is_authenticated:      #Filtrar por departamentos al que se pertenece
-        usuario= request.user.id
-        department= Personal.objects.values_list("sector").filter(name=usuario)
-        department= department[0][0]
-        entregar= Solicitudes.objects.filter(departamento=department).values()
-        return render(request, 'mis_solicitudes.html', {"contexto":entregar})
-        '''
-"""
-valopr= request.GET
-user_name = request.user.username            #Codigo pasado (lo dejo por si acaso, pero desconozco su uso practico)
-        departamento = valor.get('departamento') 
-        if departamento and departamento != "placeholder":
-            var_s_usuario = var_s_usuario.filter(departamento=departamento)
-        var_s_usuario = Solicitudes.objects.filter(funcionario=user_name)
-    else:
-        var_s_usuario = Solicitudes.objects.none()
-    return render(request, 'mis_solicitudes.html', {'contexto': var_s_usuario,"activas":valor})"""
 
 def editar_mis_solicitudes(request):
      return render(request, "editar_mis_solicitudes.html")
@@ -237,7 +222,7 @@ def redirigir_solicitudes(request):
         return redirect('Home')  
     
 def soli_dep(request):
-    if request.user.is_authenticated:      #Filtrar por departamentos al que se pertenece
+    if request.user.is_authenticated:  
         usuario= request.user.id
         department= Personal.objects.values_list("sector").filter(name=usuario)
         department= department[0][0]
@@ -301,4 +286,200 @@ def mark_as_read(request):
     notification.is_read = True
     notification.save()
     return redirect('profile')
-   
+
+class ReportePersonalizadoExcel(TemplateView):
+    def get(self,request,*args,**kwargs):
+        campo = request.GET.get('campo')
+        query = Solicitudes.objects.filter(departamento = campo)
+        wb = Workbook()
+        controlador = 4
+        ws = wb.active
+        ws.title = 'Reporte'
+        
+        for q in query:
+          #  datetime_obj = datetime.now().astimezone()
+           # datetime_excel = datetime_obj.astimezone().replace(tzinfo=None)
+            #q.fecha = datetime_excel
+        
+            #Crear título en la hoja
+            ws['B1'].alignment = Alignment(horizontal = "center",vertical = "center")
+            ws['B1'].border = Border(left = Side(border_style = "thin"), right = Side(border_style = "thin"),
+                                     top = Side(border_style = "thin"), bottom = Side(border_style = "thin") )
+            ws['B1'].fill = PatternFill(start_color= '66FFCC', end_color= '66FFCC', fill_type= "solid")
+            ws['B1'].font = Font(name = 'Calibri', size= 12, bold = True)
+            ws['B1'] = 'REPORTE PERSONALIZADO EN EXCEL CON DJANGO'
+
+            
+            #Cambiar características de las celdas
+            ws.merge_cells('B1:L1')
+
+            ws.row_dimensions[1].height = 25 #Altura
+            ws.row_dimensions[3].height = 20
+
+            ws.column_dimensions['B'].width = 30
+            ws.column_dimensions['C'].width = 30
+            ws.column_dimensions['D'].width = 30
+            ws.column_dimensions['E'].width = 30
+            ws.column_dimensions['F'].width = 30
+            ws.column_dimensions['G'].width = 30
+            ws.column_dimensions['H'].width = 30
+            ws.column_dimensions['I'].width = 30
+            ws.column_dimensions['J'].width = 30
+            ws.column_dimensions['K'].width = 30
+            ws.column_dimensions['L'].width = 30
+
+            #Crear la cabecera
+            ws['B3'].alignment = Alignment(horizontal = "center", vertical= "center")
+            ws['B3'].border = Border(left = Side(border_style = "thin"), right = Side(border_style = "thin"),
+                                     top = Side(border_style = "thin"), bottom = Side(border_style = "thin") )
+            ws['B3'].fill = PatternFill(start_color= '66CFCC', end_color= '66CFCC', fill_type= "solid")
+            ws['B3'].font = Font(name = 'Calibri', size= 10, bold = True)
+            ws['B3'] = 'Documento'
+
+            ws['C3'].alignment = Alignment(horizontal = "center", vertical= "center")
+            ws['C3'].border = Border(left = Side(border_style = "thin"), right = Side(border_style = "thin"),
+                                     top = Side(border_style = "thin"), bottom = Side(border_style = "thin") )
+            ws['C3'].fill = PatternFill(start_color= '66CFCC', end_color= '66CFCC', fill_type= "solid")
+            ws['C3'].font = Font(name = 'Calibri', size= 10, bold = True)
+            ws['C3'] = 'Autor'
+
+            ws['D3'].alignment = Alignment(horizontal = "center", vertical= "center")
+            ws['D3'].border = Border(left = Side(border_style = "thin"), right = Side(border_style = "thin"),
+                                     top = Side(border_style = "thin"), bottom = Side(border_style = "thin") )
+            ws['D3'].fill = PatternFill(start_color= '66CFCC', end_color= '66CFCC', fill_type= "solid")
+            ws['D3'].font = Font(name = 'Calibri', size= 10, bold = True)
+            ws['D3'] = 'Fecha de publicación'
+
+            ws['E3'].alignment = Alignment(horizontal = "center", vertical= "center")
+            ws['E3'].border = Border(left = Side(border_style = "thin"), right = Side(border_style = "thin"),
+                                     top = Side(border_style = "thin"), bottom = Side(border_style = "thin") )
+            ws['E3'].fill = PatternFill(start_color= '66CFCC', end_color= '66CFCC', fill_type= "solid")
+            ws['E3'].font = Font(name = 'Calibri', size= 10, bold = True)
+            ws['E3'] = 'N° de sistema'
+
+            ws['F3'].alignment = Alignment(horizontal = "center", vertical= "center")
+            ws['F3'].border = Border(left = Side(border_style = "thin"), right = Side(border_style = "thin"),
+                                     top = Side(border_style = "thin"), bottom = Side(border_style = "thin") )
+            ws['F3'].fill = PatternFill(start_color= '66CFCC', end_color= '66CFCC', fill_type= "solid")
+            ws['F3'].font = Font(name = 'Calibri', size= 10, bold = True)
+            ws['F3'] = 'Ubicación'
+
+            ws['G3'].alignment = Alignment(horizontal = "center", vertical= "center")
+            ws['G3'].border = Border(left = Side(border_style = "thin"), right = Side(border_style = "thin"),
+                                     top = Side(border_style = "thin"), bottom = Side(border_style = "thin") )
+            ws['G3'].fill = PatternFill(start_color= '66CFCC', end_color= '66CFCC', fill_type= "solid")
+            ws['G3'].font = Font(name = 'Calibri', size= 10, bold = True)
+            ws['G3'] = 'Departamento encargado'
+
+            ws['H3'].alignment = Alignment(horizontal = "center", vertical= "center")
+            ws['H3'].border = Border(left = Side(border_style = "thin"), right = Side(border_style = "thin"),
+                                     top = Side(border_style = "thin"), bottom = Side(border_style = "thin") )
+            ws['H3'].fill = PatternFill(start_color= '66CFCC', end_color= '66CFCC', fill_type= "solid")
+            ws['H3'].font = Font(name = 'Calibri', size= 10, bold = True)
+            ws['H3'] = 'Nota'
+
+            ws['I3'].alignment = Alignment(horizontal = "center", vertical= "center")
+            ws['I3'].border = Border(left = Side(border_style = "thin"), right = Side(border_style = "thin"),
+                                     top = Side(border_style = "thin"), bottom = Side(border_style = "thin") )
+            ws['I3'].fill = PatternFill(start_color= '66CFCC', end_color= '66CFCC', fill_type= "solid")
+            ws['I3'].font = Font(name = 'Calibri', size= 10, bold = True)
+            ws['I3'] = 'Fecha de creación'
+
+            ws['J3'].alignment = Alignment(horizontal = "center", vertical= "center")
+            ws['J3'].border = Border(left = Side(border_style = "thin"), right = Side(border_style = "thin"),
+                                     top = Side(border_style = "thin"), bottom = Side(border_style = "thin") )
+            ws['J3'].fill = PatternFill(start_color= '66CFCC', end_color= '66CFCC', fill_type= "solid")
+            ws['J3'].font = Font(name = 'Calibri', size= 10, bold = True)
+            ws['J3'] = 'Plazo'
+
+            ws['K3'].alignment = Alignment(horizontal = "center", vertical= "center")
+            ws['K3'].border = Border(left = Side(border_style = "thin"), right = Side(border_style = "thin"),
+                                     top = Side(border_style = "thin"), bottom = Side(border_style = "thin") )
+            ws['K3'].fill = PatternFill(start_color= '66CFCC', end_color= '66CFCC', fill_type= "solid")
+            ws['K3'].font = Font(name = 'Calibri', size= 10, bold = True)
+            ws['K3'] = 'Funcionario'
+
+            ws['L3'].alignment = Alignment(horizontal = "center", vertical= "center")
+            ws['L3'].border = Border(left = Side(border_style = "thin"), right = Side(border_style = "thin"),
+                                     top = Side(border_style = "thin"), bottom = Side(border_style = "thin") )
+            ws['L3'].fill = PatternFill(start_color= '66CFCC', end_color= '66CFCC', fill_type= "solid")
+            ws['L3'].font = Font(name = 'Calibri', size= 10, bold = True)
+            ws['L3'] = 'Estado'
+
+            #Pintar los datos
+            ws.cell(row = controlador, column = 2).alignment = Alignment(horizontal = "center")
+            ws.cell(row = controlador, column = 2).border = Border(left = Side(border_style = "thin"), right = Side(border_style = "thin"),
+                                     top = Side(border_style = "thin"), bottom = Side(border_style = "thin") )
+            ws.cell(row= controlador, column = 2).font = Font(name = 'Calibri', size = 8)
+            ws.cell(row = controlador, column = 2).value= q.documento
+
+            ws.cell(row = controlador, column = 3).alignment = Alignment(horizontal = "center")
+            ws.cell(row = controlador, column = 3).border = Border(left = Side(border_style = "thin"), right = Side(border_style = "thin"),
+                                     top = Side(border_style = "thin"), bottom = Side(border_style = "thin") )
+            ws.cell(row= controlador, column = 3).font = Font(name = 'Calibri', size = 8)
+            ws.cell(row = controlador, column = 3).value= q.autor
+
+            ws.cell(row = controlador, column = 4).alignment = Alignment(horizontal = "center")
+            ws.cell(row = controlador, column = 4).border = Border(left = Side(border_style = "thin"), right = Side(border_style = "thin"),
+                                     top = Side(border_style = "thin"), bottom = Side(border_style = "thin") )
+            ws.cell(row= controlador, column = 4).font = Font(name = 'Calibri', size = 8)
+            ws.cell(row = controlador, column = 4).value= q.fecha_publicación
+
+            ws.cell(row = controlador, column = 5).alignment = Alignment(horizontal = "center")
+            ws.cell(row = controlador, column = 5).border = Border(left = Side(border_style = "thin"), right = Side(border_style = "thin"),
+                                     top = Side(border_style = "thin"), bottom = Side(border_style = "thin") )
+            ws.cell(row= controlador, column = 5).font = Font(name = 'Calibri', size = 8)
+            ws.cell(row = controlador, column = 5).value= q.número_de_sistema
+
+            ws.cell(row = controlador, column = 6).alignment = Alignment(horizontal = "center")
+            ws.cell(row = controlador, column = 6).border = Border(left = Side(border_style = "thin"), right = Side(border_style = "thin"),
+                                     top = Side(border_style = "thin"), bottom = Side(border_style = "thin") )
+            ws.cell(row= controlador, column = 6).font = Font(name = 'Calibri', size = 8)
+            ws.cell(row = controlador, column = 6).value= q.ubicación
+
+            ws.cell(row = controlador, column = 7).alignment = Alignment(horizontal = "center")
+            ws.cell(row = controlador, column = 7).border = Border(left = Side(border_style = "thin"), right = Side(border_style = "thin"),
+                                     top = Side(border_style = "thin"), bottom = Side(border_style = "thin") )
+            ws.cell(row= controlador, column = 7).font = Font(name = 'Calibri', size = 8)
+            ws.cell(row = controlador, column = 7).value= q.departamento
+
+            ws.cell(row = controlador, column = 8).alignment = Alignment(horizontal = "center")
+            ws.cell(row = controlador, column = 8).border = Border(left = Side(border_style = "thin"), right = Side(border_style = "thin"),
+                                     top = Side(border_style = "thin"), bottom = Side(border_style = "thin") )
+            ws.cell(row= controlador, column = 8).font = Font(name = 'Calibri', size = 8)
+            ws.cell(row = controlador, column = 8).value= q.nota
+
+            #ws.cell(row = controlador, column = 9).alignment = Alignment(horizontal = "center")
+           # ws.cell(row = controlador, column = 9).border = Border(left = Side(border_style = "thin"), right = Side(border_style = "thin"),
+             #                        top = Side(border_style = "thin"), bottom = Side(border_style = "thin") )
+           # ws.cell(row= controlador, column = 9).font = Font(name = 'Calibri', size = 8)
+            #ws.cell(row = controlador, column = 9).value= q.fecha
+
+            ws.cell(row = controlador, column = 10).alignment = Alignment(horizontal = "center")
+            ws.cell(row = controlador, column = 10).border = Border(left = Side(border_style = "thin"), right = Side(border_style = "thin"),
+                                     top = Side(border_style = "thin"), bottom = Side(border_style = "thin") )
+            ws.cell(row= controlador, column = 10).font = Font(name = 'Calibri', size = 8)
+            ws.cell(row = controlador, column = 10).value= q.plazo
+
+            ws.cell(row = controlador, column = 11).alignment = Alignment(horizontal = "center")
+            ws.cell(row = controlador, column = 11).border = Border(left = Side(border_style = "thin"), right = Side(border_style = "thin"),
+                                     top = Side(border_style = "thin"), bottom = Side(border_style = "thin") )
+            ws.cell(row= controlador, column = 11).font = Font(name = 'Calibri', size = 8)
+            ws.cell(row = controlador, column = 11).value= q.funcionario
+
+            ws.cell(row = controlador, column = 12).alignment = Alignment(horizontal = "center")
+            ws.cell(row = controlador, column = 12).border = Border(left = Side(border_style = "thin"), right = Side(border_style = "thin"),
+                                     top = Side(border_style = "thin"), bottom = Side(border_style = "thin") )
+            ws.cell(row= controlador, column = 12).font = Font(name = 'Calibri', size = 8)
+            ws.cell(row = controlador, column = 12).value= q.estado
+            
+            controlador += 1
+
+        #Establecer el nombre de mi archivo
+        nombre_archivo = "ReportePersonalizadoExcel.xlsx"
+        #Definir el tipo de respuesta que se va a dar
+        response = HttpResponse(content_type = "application/ms-excel")
+        contenido = "attachment; filename = {0}".format(nombre_archivo)
+        response["Content-Disposition"] = contenido
+        wb.save(response)
+        return response

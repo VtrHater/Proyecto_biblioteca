@@ -81,13 +81,18 @@
     </a>
     <br>
     <br>
+    <br>
+    <form action="{% url 'reporte' %}" method="get">
+        <input type="text" name="campo" placeholder="Ingrese departamento">
+        <button type="submit">REPORTE EXCEL POR DEPARTAMENTO</button>
+    </form>
+    <br>
     
     
     <h2>Lista de Solicitudes</h2>
     <table>
         <thead>
             <tr>
-                <th>ID</th>
                 <th>Documento</th>
                 <th>Autor</th>
                 <th>Fecha de publicación</th>
@@ -104,7 +109,6 @@
         <tbody>
             {% for x in contexto %}
                 <tr>
-                    <td>{{ x.id }}</td>
                     <td>{{ x.documento }}</td>
                     <td>{{ x.autor }}</td>
                     <td>{{ x.fecha_publicación }}</td>

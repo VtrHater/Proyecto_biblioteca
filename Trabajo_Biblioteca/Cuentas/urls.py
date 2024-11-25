@@ -4,7 +4,7 @@ from .views import editar_perfil, filtrar_activas
 from .views import filtrar_solicitudes_usuario
 from django.conf import settings
 from django.conf.urls.static import static
-from django.urls import path
+
 urlpatterns = [
 
     path('', views.Home, name= "Home"),
@@ -30,6 +30,7 @@ urlpatterns = [
     path('solicitudes_dep/', views.soli_dep , name='solicitudes_dep'),
     path("perfil/editar/", view=editar_perfil, name="editar_perfil"),
     path('enviar_notificacion/', views.enviar_notificacion, name='enviar_notificacion'),
+    path('reporte/', views.ReportePersonalizadoExcel.as_view(), name = 'reporte'),
     
     
 ]
