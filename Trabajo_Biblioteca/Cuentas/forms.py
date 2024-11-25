@@ -30,7 +30,7 @@ class estadosSolicitudesform(forms.ModelForm):
         self.fields['nota'].disabled = False
         self.fields['plazo'].disabled = True
         self.fields['funcionario'].disabled = True
-        self.fields['prioridad'].disabled = True
+        self.fields['prioridad'].disabled = False
 
 class ProfileForm(forms.ModelForm):
     class Meta:
