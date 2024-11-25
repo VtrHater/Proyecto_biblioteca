@@ -296,11 +296,11 @@ class ReportePersonalizadoExcel(TemplateView):
         ws = wb.active
         ws.title = 'Reporte'
         
-        for q in query:
-          #  datetime_obj = datetime.now().astimezone()
-           # datetime_excel = datetime_obj.astimezone().replace(tzinfo=None)
-            #q.fecha = datetime_excel
         
+        for q in query:
+            fecha_sin_tz = q.fecha.replace(tzinfo=None) if q.fecha else None
+
+
             #Crear título en la hoja
             ws['B1'].alignment = Alignment(horizontal = "center",vertical = "center")
             ws['B1'].border = Border(left = Side(border_style = "thin"), right = Side(border_style = "thin"),
@@ -449,11 +449,11 @@ class ReportePersonalizadoExcel(TemplateView):
             ws.cell(row= controlador, column = 8).font = Font(name = 'Calibri', size = 8)
             ws.cell(row = controlador, column = 8).value= q.nota
 
-            #ws.cell(row = controlador, column = 9).alignment = Alignment(horizontal = "center")
-           # ws.cell(row = controlador, column = 9).border = Border(left = Side(border_style = "thin"), right = Side(border_style = "thin"),
-             #                        top = Side(border_style = "thin"), bottom = Side(border_style = "thin") )
-           # ws.cell(row= controlador, column = 9).font = Font(name = 'Calibri', size = 8)
-            #ws.cell(row = controlador, column = 9).value= q.fecha
+            ws.cell(row = controlador, column = 9).alignment = Alignment(horizontal = "center")
+            ws.cell(row = controlador, column = 9).border = Border(left = Side(border_style = "thin"), right = Side(border_style = "thin"),
+                                     top = Side(border_style = "thin"), bottom = Side(border_style = "thin") )
+            ws.cell(row= controlador, column = 9).font = Font(name = 'Calibri', size = 8)
+            ws.cell(row = controlador, column = 9).value= fecha_sin_tz
 
             ws.cell(row = controlador, column = 10).alignment = Alignment(horizontal = "center")
             ws.cell(row = controlador, column = 10).border = Border(left = Side(border_style = "thin"), right = Side(border_style = "thin"),
