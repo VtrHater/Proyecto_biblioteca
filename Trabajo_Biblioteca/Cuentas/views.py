@@ -227,7 +227,7 @@ def soli_dep(request):
         department= Personal.objects.values_list("sector").filter(name=usuario)
         department= department[0][0]
         entregar= Solicitudes.objects.filter(departamento=department).values()
-        return render(request, 'solicitudes_dep.html', {"contexto":entregar})
+        return render(request, 'solicitudes_dep.html', {"contexto":entregar,"Depa":department})
 
 @login_required
 def editar_perfil(request):
