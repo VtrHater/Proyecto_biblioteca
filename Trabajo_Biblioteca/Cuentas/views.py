@@ -83,7 +83,12 @@ def solicitud(request):
     return render(request, 'solicitudes.html', data)
 
 def soliexistentes(request):
-    variable = Solicitudes.objects.values() #values. variable es la info.
+    if request.method== "GET":
+        variable = Solicitudes.objects.values() #values. variable es la info.
+    else:
+        depa= request.POST["campo"]
+        print(depa)
+        variable= Solicitudes.objects.filter(departamento=depa)
     return render(request, 'solicitudes_existentes.html', {'contexto': variable})
 
 def solicitudes_lista(request):
@@ -182,6 +187,23 @@ def prioridades(request):
         "I":soli_I,
         "PI":soli_PI
     })
+
+def prioridades_administracion(request):
+    if request.user.is_authenticated:
+        usuario = request.user.id  
+        department = Personal.objects.filter(name=usuario).values_list("sector", flat=True).first()
+        if department is None:
+            department = "placeholder"  
+        soli_MI = Solicitudes.objects.filter(prioridad="Muy Importante", departamento=department)
+        soli_I = Solicitudes.objects.filter(prioridad="Importante", departamento=department)
+        soli_PI = Solicitudes.objects.filter(prioridad="Poco Importante", departamento=department)
+        
+        return render(request, "prioridad_usuario.html", {
+            "MI": soli_MI,
+            "I": soli_I,
+            "PI": soli_PI
+        })
+
 
 def prioridades_usuario(request):
     if request.user.is_authenticated:
