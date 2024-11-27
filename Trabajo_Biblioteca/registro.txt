@@ -125,3 +125,4 @@ eeaf2 cierre de sesion el: 26-11-2024 a las: 21:11:12
 edgar inicio de sesion el: 26-11-2024 a las: 21:11:18
 edgar cierre de sesion el: 26-11-2024 a las: 21:14:16
 Gefe inicio de sesion el: 26-11-2024 a las: 21:14:23
+eeaf2 inicio de sesion el: 27-11-2024 a las: 02:43:15

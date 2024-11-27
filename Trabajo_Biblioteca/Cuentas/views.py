@@ -295,12 +295,24 @@ def enviar_notificacion(request):
 
 @login_required
 def profile_view(request):
-    user_notifications = Notification.objects.filter(user=request.user).order_by('-timestamp')
-    unread_count = user_notifications.filter(is_read=False).count()
-    return render(request, 'cuentas/profile.html', {
-        'notifications': user_notifications,
-        'unread_count': unread_count
-    })
+    if request.method=="GET":
+        user_notifications = Notification.objects.filter(user=request.user).order_by('-timestamp')
+        unread_count = user_notifications.filter(is_read=False).count()
+        return render(request, 'cuentas/profile.html', {
+            'notifications': user_notifications,
+            'unread_count': unread_count
+            })
+    else:
+        prueba= request.POST["mark_as_read"]
+        if prueba == "True":
+            prueba= True
+        else:
+            prueba= False
+        user_notifications= Notification.objects.filter(user=request.user).order_by("-timestamp")
+        for x in user_notifications:
+            x.is_read= prueba
+            x.save()
+        return render(request, 'cuentas/profile.html',{'notifications':user_notifications})
 
 @login_required
 def mark_as_read(request):
